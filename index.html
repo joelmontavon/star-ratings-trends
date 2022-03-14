@@ -1,0 +1,62 @@
+<html>
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="https://unpkg.com/element-plus"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.1/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+  <script src="https://unpkg.com/simple-statistics@7.7.0/dist/simple-statistics.min.js"></script>
+
+  <script src="js/aggregate.js"></script>
+  <script src="js/rates-distro.vue"></script>
+  <script src="js/rates-avg.vue"></script>
+  <script src="js/stars-cutpoints.vue"></script>
+  <script src="js/stars-distro.vue"></script>
+
+  <link rel="stylesheet" href="style/style.css" />
+</head>
+<body>
+  <div id="app">
+    <el-card>
+      <template #header>
+        Options
+      </template>
+      <el-form label-width="120px">
+        <el-form-item label="Contract Type:">
+          <el-select v-model="lob.value" @change="changed" placeholder="Select">
+            <el-option v-for="item in lob.options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="Measure:">
+          <el-select v-model="measure.value" @change="changed" placeholder="Select">
+            <el-option v-for="item in measure.options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+    </el-card>
+    <el-card>
+      <template #header>
+        Results
+      </template>
+      <el-row>
+        <el-col :span="12">
+          <stars-cutpoints :my-data="data.cutpoints"></stars-cutpoints>
+        </el-col>
+        <el-col :span="12">
+          <stars-distro :my-data="data.filtered" ></stars-distro>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="12">
+          <rates-distro :my-data="data.filtered"></rates-distro>
+        </el-col>
+        <el-col :span="12">
+          <rates-avg :my-data="data.filtered"></rates-avg>
+        </el-col>
+      </el-row>
+    </el-card>
+  </div>
+  <script src="js/app.js"></script>
+</body>
